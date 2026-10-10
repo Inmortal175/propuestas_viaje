@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rutas Turísticas Ayacucho 2026 | Guía Informativa Full Day y Campamentos</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Font Configuration -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f1f0fd',
+              100: '#dcddfc',
+              600: '#1816a3',
+              700: '#1a1580',
+              800: '#161d65',
+              900: '#141d53',
+            },
+            earth: {
+              100: '#fef3c7',
+              500: '#f59e0b',
+              700: '#b45309',
+              800: '#92400e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom chart container constraints */
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 320px;
+      max-height: 380px;
+    }
+    @media (min-width: 768px) {
+      .chart-container {
+        height: 360px;
+      }
+    }
+    /* Custom scrollbar aesthetics */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #059669;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #047857;
+    }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Chosen Palette: Warm Andean Earth & Nature (Stone-50 background, Emerald Primary, Amber/Warm Accents, Dark Slate Text) -->
+
+  <!-- Application Structure Plan:
+       1. Top Announcement Bar: Highlights bus logistics ("rutas" contratadas directamente desde Ayacucho) and strict early departures (máximo 8:00 AM).
+       2. Hero Banner: Clean portal header detailing the 10 selected destinations, key operational facts, and search action.
+       3. Geographic & Difficulty Dashboard: Interactive Chart.js charts showing altitude profiles and difficulty level distributions.
+       4. Interactive Destination Directory & Filters: Search bar, modality filter (Full Day vs. Campamento), difficulty filter, sorting, and interactive card grid with multi-photo previews.
+       5. Visual Showcase & Gallery Explorer: Categorized gallery featuring real photographic references (Pozas Termales, Lagunas Glaciares, Cañones y Bosques de Piedra, Sitios Históricos).
+       6. Detailed Comparison Table: Comprehensive table comparing altitudes, modalities, travel durations, and physical difficulties.
+       7. Detailed Proposal Modal: Complete modal with multi-photo reference gallery, hour-by-hour itineraries (strictly starting <= 8:00 AM), gear recommendations, and local gastronomy info.
+       8. Timeline & FAQ Accordion: Explains the 8 organizational phases, bus hire guidelines, and exam week rules (Semana 08).
+  -->
+
+  <!-- Visualization & Content Choices:
+       - Altitude Comparison Chart -> Chart.js Bar Chart -> Visualizes meters above sea level to assess physical demand without pricing -> Clear comparative context.
+       - Difficulty & Modality Breakdown -> Chart.js Doughnut Chart -> Displays proportion of low, moderate, and high exertion routes.
+       - Photo Gallery Cards & Modal Carousel -> High resolution photography cards for visual immersion.
+       - Purely Informative UI -> Removed voting system in favor of an exploratory, decision-support guide.
+  -->
+
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-emerald-900 text-emerald-100 text-xs md:text-sm font-medium py-2.5 px-4 text-center border-b border-emerald-800 flex justify-center items-center gap-2 flex-wrap">
+    <span class="inline-block bg-amber-500 text-stone-950 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">Logística Oficial</span>
+    <span>Salidas grupales en buses locales tipo <strong>"rutas"</strong> contratados en Ayacucho. <strong>Hora máxima de salida: 8:00 AM.</strong></span>
+  </div>
+
+  <!-- HERO SECTION -->
+  <header class="bg-gradient-to-br from-emerald-950 via-emerald-800 to-stone-900 text-white relative overflow-hidden shadow-xl border-b border-emerald-700">
+    <div class="max-w-7xl mx-auto px-4 py-12 md:py-16 relative z-10">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+        
+        <div class="max-w-3xl text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 bg-emerald-800/80 border border-emerald-600/50 text-emerald-200 text-xs font-semibold px-3 py-1 rounded-full mb-4">
+            <span>&#127957; Portal Informativo de Confraternidad</span>
+            <span>&bull;</span>
+            <span>10 Destinos Evaluados</span>
+          </div>
+          <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+            Propuestas de Viaje <br><span class="text-amber-400">Ayacucho 2026</span>
+          </h1>
+          <p class="mt-4 text-stone-200 text-base md:text-lg font-light leading-relaxed">
+            Explora las opciones turísticas seleccionadas en la región de Ayacucho. Revisa fotografías de referencia, itinerarios detallados en <strong>Full Day</strong> o <strong>Campamento (2D/1N)</strong>, niveles de dificultad y recomendaciones de equipamiento.
+          </p>
+
+          <div class="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
+            <a href="#catalogo" class="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-6 py-3 rounded-xl shadow-lg transition duration-200 transform hover:-translate-y-0.5 flex items-center gap-2">
+              <span>&#128065; Explorar Catalogo de Rutas</span>
+            </a>
+            <a href="#galeria" class="bg-emerald-700/80 hover:bg-emerald-600 border border-emerald-500 text-white font-semibold px-6 py-3 rounded-xl shadow transition duration-200 flex items-center gap-2">
+              <span>&#128247; Ver Galería de Fotos</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- LOGISTICS SUMMARY CARD -->
+        <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl w-full max-w-md shadow-2xl space-y-4">
+          <h3 class="text-amber-300 font-bold text-sm uppercase tracking-wider text-center border-b border-white/10 pb-2">
+            &#128652; Reglas Principales del Viaje
+          </h3>
+          
+          <ul class="space-y-3 text-xs text-stone-200">
+            <li class="flex items-start gap-2">
+              <span class="text-amber-400 font-bold">&bull;</span>
+              <span><strong>Puntualidad en Salida:</strong> Todas las rutas parten por la mañana, con horario límite de salida a las <strong>8:00 AM</strong> como máximo desde Ayacucho.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-400 font-bold">&bull;</span>
+              <span><strong>Transporte de Grupo:</strong> Contratación de unidades interprovinciales tipo "ruta" (bus/custer) con choferes experimentados.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-400 font-bold">&bull;</span>
+              <span><strong>Exámenes (Semana 08):</strong> Las fechas del 19 al 23 de Octubre están restringidas por la programación académica.</span>
+            </li>
+          </ul>
+
+          <div class="pt-2 text-center border-t border-white/10">
+            <span class="text-[11px] text-emerald-200 font-semibold">Organizado para la Comunidad de la EPIS UNSCH 2026</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 py-10 space-y-16 flex-grow w-full">
+
+    <!-- INTRODUCTORY OVERVIEW SECTION -->
+    <section class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-stone-200">
+      <div class="max-w-3xl">
+        <h2 class="text-2xl font-bold text-stone-900 mb-3">Marco de Organización y Selección de Destinos</h2>
+        <p class="text-stone-600 leading-relaxed text-sm md:text-base">
+          Esta plataforma reúne <strong>10 rutas turísticas destacadas</strong> dentro del departamento de Ayacucho. Cada destino cuenta con itinerarios adaptados para salidas matutinas (máximo 8:00 AM) con retorno coordinado o campamento nocturno, permitiendo evaluar la exigencia física y el atractivo de cada entorno natural.
+        </p>
+      </div>
+
+      <!-- KEY METRICS ROW -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
+        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200">
+          <span class="text-xs font-semibold text-stone-500 uppercase block">Rutas Seleccionadas</span>
+          <span class="text-2xl font-extrabold text-emerald-800">10 Destinos</span>
+          <span class="text-[11px] text-stone-500 block mt-1">En la región Ayacucho</span>
+        </div>
+        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200">
+          <span class="text-xs font-semibold text-stone-500 uppercase block">Hora Máx. Partida</span>
+          <span class="text-2xl font-extrabold text-amber-600">08:00 AM</span>
+          <span class="text-[11px] text-stone-500 block mt-1">Salidas matutinas</span>
+        </div>
+        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200">
+          <span class="text-xs font-semibold text-stone-500 uppercase block">Rango de Altitudes</span>
+          <span class="text-2xl font-extrabold text-emerald-800">3,150 - 4,195</span>
+          <span class="text-[11px] text-stone-500 block mt-1">metros s.n.m.</span>
+        </div>
+        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200">
+          <span class="text-xs font-semibold text-stone-500 uppercase block">Modalidades</span>
+          <span class="text-2xl font-extrabold text-emerald-800">Full Day / Camp</span>
+          <span class="text-[11px] text-stone-500 block mt-1">1 o 2 días (2D/1N)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA VISUALIZATIONS DASHBOARD SECTION -->
+    <!-- <section class="space-y-6">
+      <div class="border-l-4 border-emerald-700 pl-4">
+        <h2 class="text-2xl font-bold text-stone-900">Análisis Altitudinal y de Dificultad Física</h2>
+        <p class="text-sm text-stone-600 mt-1">
+          Compara la elevación geográfica sobre el nivel del mar y el nivel de esfuerzo requerido para cada una de las 10 alternativas.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8"> -->
+        
+        <!-- CHART 1: ALTITUDE COMPARISON -->
+        <!-- <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-stone-900 text-lg mb-1 flex items-center justify-between">
+              <span>Altitud Máxima por Destino</span>
+              <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-medium">Metros s.n.m.</span>
+            </h3>
+            <p class="text-xs text-stone-500 mb-4">Evaluación de elevación geográfica para previsión de aclimatación.</p>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartAltitude"></canvas>
+          </div>
+          <div class="mt-4 pt-3 border-t border-stone-100 text-[11px] text-stone-500 italic text-center">
+            Destinos por encima de 4,000 msnm requieren abrigo térmico y prevención de soroche.
+          </div>
+        </div> -->
+
+        <!-- CHART 2: DIFFICULTY & MODALITY BREAKDOWN -->
+        <!-- <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-stone-900 text-lg mb-1">Distribución por Exigencia Física</h3>
+            <p class="text-xs text-stone-500 mb-4">Proporción de opciones según el nivel de caminata y esfuerzo del visitante.</p>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartDifficulty"></canvas>
+          </div>
+          <div class="mt-4 pt-3 border-t border-stone-100 text-[11px] text-stone-500 italic text-center">
+            Clasificación: Baja (caminata leve/recreativa), Moderada (caminata media), Alta (alta montaña).
+          </div>
+        </div>
+
+      </div>
+    </section> -->
+
+    <!-- CATALOG & FILTERS SECTION -->
+    <section id="catalogo" class="space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-stone-200 pb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-stone-900">Catálogo Interactivo de Propuestas Turísticas</h2>
+          <p class="text-sm text-stone-600 mt-1">Explora las fichas informativas, filtra según tus intereses y haz clic en cualquier destino para ver fotos e itinerario.</p>
+        </div>
+        <div class="text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg self-start md:self-auto">
+          Mostrando <span id="visible-count">10</span> de 10 rutas
+        </div>
+      </div>
+
+      <!-- FILTER CONTROLS BAR -->
+      <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          
+          <!-- SEARCH INPUT -->
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Buscar por Nombre o Ubicación</label>
+            <input type="text" id="search-input" placeholder="Ej: Millpu, Vinchos, Collpa, Lagunas..." class="w-full bg-stone-50 border border-stone-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+          </div>
+
+          <!-- MODALITY FILTER -->
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Modalidad de Viaje</label>
+            <select id="modality-filter" class="w-full bg-stone-50 border border-stone-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+              <option value="all">Todas las modalidades</option>
+              <option value="fullday">Full Day (1 Día)</option>
+              <option value="campamento">Apto para Campamento (2D/1N)</option>
+            </select>
+          </div>
+
+          <!-- DIFFICULTY FILTER -->
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Exigencia Física</label>
+            <select id="difficulty-filter" class="w-full bg-stone-50 border border-stone-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+              <option value="all">Todas las dificultades</option>
+              <option value="Baja">Baja / Relajada</option>
+              <option value="Moderada">Moderada</option>
+              <option value="Alta">Alta / Alta Montaña</option>
+            </select>
+          </div>
+
+          <!-- SORTING OPTIONS -->
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Ordenar por</label>
+            <select id="sort-select" class="w-full bg-stone-50 border border-stone-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+              <option value="num-asc">Número (1 al 10)</option>
+              <option value="alt-desc">Altitud: Mayor a Menor</option>
+              <option value="alt-asc">Altitud: Menor a Mayor</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DESTINATIONS GRID -->
+      <div id="proposals-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Cards injected dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- PHOTO GALLERY SHOWCASE & ATTRACTION EXPLORER -->
+    <section id="galeria" class="bg-stone-900 rounded-3xl p-6 md:p-10 text-white shadow-2xl space-y-8">
+      <div class="border-l-4 border-amber-400 pl-4">
+        <span class="text-amber-400 text-xs font-bold uppercase tracking-wider block mb-1">&#128247; Galería Fotográfica de Referencia</span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Explorador Visual de Atractivos</h2>
+        <p class="text-xs md:text-sm text-stone-300 mt-1 max-w-2xl leading-relaxed">
+          Haz clic en las categorías para revisar paisajes, cañones, lagunas glaciares y sitios arqueológicos de las distintas opciones propuestas.
+        </p>
+      </div>
+
+      <!-- CATEGORY TABS -->
+      <div class="flex flex-wrap gap-2 border-b border-stone-800 pb-4">
+        <button onclick="filterGallery('all')" id="btn-gal-all" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 text-stone-950 transition">
+          Todos los Atractivos
+        </button>
+        <button onclick="filterGallery('termas')" id="btn-gal-termas" class="px-4 py-2 rounded-xl text-xs font-bold bg-stone-800 text-stone-300 hover:bg-stone-700 transition">
+          Aguas y Pozas Termales
+        </button>
+        <button onclick="filterGallery('lagunas')" id="btn-gal-lagunas" class="px-4 py-2 rounded-xl text-xs font-bold bg-stone-800 text-stone-300 hover:bg-stone-700 transition">
+          Lagunas y Espejos de Agua
+        </button>
+        <button onclick="filterGallery('formaciones')" id="btn-gal-formaciones" class="px-4 py-2 rounded-xl text-xs font-bold bg-stone-800 text-stone-300 hover:bg-stone-700 transition">
+          Cañones, Piedras y Cascadas
+        </button>
+        <button onclick="filterGallery('cultura')" id="btn-gal-cultura" class="px-4 py-2 rounded-xl text-xs font-bold bg-stone-800 text-stone-300 hover:bg-stone-700 transition">
+          Historia Inca y Miradores
+        </button>
+      </div>
+
+      <!-- GALLERY GRID CONTAINER -->
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- Injected dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- DETAILED COMPARISON TABLE -->
+    <section class="bg-white rounded-2xl p-6 shadow-sm border border-stone-200 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-100 pb-3">
+        <h3 class="text-xl font-bold text-stone-900">Cuadro Comparativo Completo</h3>
+        <span class="text-xs text-stone-500">10 Propuestas Turísticas en Ayacucho</span>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-stone-100 text-stone-700 font-bold uppercase tracking-wider border-b border-stone-200">
+              <th class="p-3">N°</th>
+              <th class="p-3">Destino Principal</th>
+              <th class="p-3">Provincia / Distrito</th>
+              <th class="p-3">Altitud</th>
+              <th class="p-3">Dificultad</th>
+              <th class="p-3">Hora Salida Est.</th>
+              <th class="p-3">Duración</th>
+              <th class="p-3 text-center">Detalles</th>
+            </tr>
+          </thead>
+          <tbody id="comparison-table-body" class="divide-y divide-stone-100 text-stone-600">
+            <!-- Table rows injected dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TIMELINE & FAQ SECTION -->
+    <section class="space-y-8">
+      <div class="border-l-4 border-amber-500 pl-4">
+        <h2 class="text-2xl font-bold text-stone-900">Cronograma de Organización y Preguntas Frecuentes</h2>
+        <p class="text-sm text-stone-600 mt-1">Revisa el proceso de coordinación y normas para el viaje de confraternidad.</p>
+      </div>
+
+      <!-- TIMELINE STEPS GRID -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm relative">
+          <span class="text-2xl font-black text-emerald-800 opacity-30 absolute top-2 right-3">01</span>
+          <span class="text-[10px] font-bold text-emerald-700 uppercase block mb-1">Fase 1</span>
+          <h4 class="font-bold text-stone-900 text-sm">Presentación de Rutas</h4>
+          <p class="text-xs text-stone-500 mt-1">Revisión de itinerarios, fotografías y requerimientos físicos de cada lugar.</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm relative">
+          <span class="text-2xl font-black text-emerald-800 opacity-30 absolute top-2 right-3">02</span>
+          <span class="text-[10px] font-bold text-emerald-700 uppercase block mb-1">Fase 2</span>
+          <h4 class="font-bold text-stone-900 text-sm">Elección del Grupo</h4>
+          <p class="text-xs text-stone-500 mt-1">Definición consensuada del destino y la modalidad (Full Day vs Campamento).</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm relative border-amber-300 bg-amber-50/20">
+          <span class="text-2xl font-black text-amber-600 opacity-30 absolute top-2 right-3">03</span>
+          <span class="text-[10px] font-bold text-amber-800 uppercase block mb-1">Fase 3</span>
+          <h4 class="font-bold text-stone-900 text-sm">Contratación de Buses</h4>
+          <p class="text-xs text-stone-600 mt-1">Separación de vehículos tipo "ruta" de transporte local con salidas fijas.</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm relative bg-emerald-50/40 border-emerald-300">
+          <span class="text-2xl font-black text-emerald-800 opacity-30 absolute top-2 right-3">04</span>
+          <span class="text-[10px] font-bold text-emerald-800 uppercase block mb-1">Fase 4</span>
+          <h4 class="font-bold text-emerald-950 text-sm">Salida Matutina</h4>
+          <p class="text-xs text-stone-600 mt-1">Encuentro en el punto fijado en Ayacucho e inicio del viaje (máx 8:00 AM).</p>
+        </div>
+      </div>
+
+      <!-- FAQ ACCORDION -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-stone-200 space-y-3">
+        <h3 class="font-bold text-stone-900 text-lg mb-2">Preguntas Frecuentes y Logística</h3>
+
+        <div class="border border-stone-200 rounded-xl overflow-hidden">
+          <button onclick="toggleFaq('faq-1')" class="w-full text-left p-4 bg-stone-50 font-bold text-xs md:text-sm text-stone-800 flex justify-between items-center hover:bg-stone-100">
+            <span>¿A qué hora parten los buses tipo "rutas" desde Ayacucho?</span>
+            <span id="faq-1-icon" class="text-emerald-700 font-extrabold text-lg">+</span>
+          </button>
+          <div id="faq-1" class="hidden p-4 text-xs text-stone-600 leading-relaxed bg-white border-t border-stone-200">
+            Todas las partidas están programadas para la mañana, con hora de salida <strong>máxima a las 8:00 AM</strong>. Destinos más lejanos como Pachapupum o Razuhuillca requieren salidas entre las 04:00 AM y las 06:00 AM para aprovechar la luz del día.
+          </div>
+        </div>
+
+        <div class="border border-stone-200 rounded-xl overflow-hidden">
+          <button onclick="toggleFaq('faq-2')" class="w-full text-left p-4 bg-stone-50 font-bold text-xs md:text-sm text-stone-800 flex justify-between items-center hover:bg-stone-100">
+            <span>¿Por qué están excluidas las fechas del 19 al 23 de Octubre?</span>
+            <span id="faq-2-icon" class="text-emerald-700 font-extrabold text-lg">+</span>
+          </button>
+          <div id="faq-2" class="hidden p-4 text-xs text-stone-600 leading-relaxed bg-white border-t border-stone-200">
+            Dicho periodo corresponde a la <strong>Semana 08 de Exámenes Académicos</strong>. Para permitir la preparación adecuada de todos los participantes, no se realizan actividades en esa semana.
+          </div>
+        </div>
+
+        <div class="border border-stone-200 rounded-xl overflow-hidden">
+          <button onclick="toggleFaq('faq-3')" class="w-full text-left p-4 bg-stone-50 font-bold text-xs md:text-sm text-stone-800 flex justify-between items-center hover:bg-stone-100">
+            <span>¿Qué precauciones considerar para sitios a más de 4,000 msnm?</span>
+            <span id="faq-3-icon" class="text-emerald-700 font-extrabold text-lg">+</span>
+          </button>
+          <div id="faq-3" class="hidden p-4 text-xs text-stone-600 leading-relaxed bg-white border-t border-stone-200">
+            Para destinos como Pachapupum (4,100 msnm), Razuhuillca (4,095 msnm) o Verdeccocha (4,195 msnm), es indispensable llevar ropa térmica (cortaviento, chullo, guantes), sorojchi pills, mate de coca y abundante agua.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PROPOSAL DETAIL MODAL WITH PHOTO GALLERY -->
+  <div id="detail-modal" class="fixed inset-0 bg-stone-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col my-auto border border-stone-200">
+      
+      <!-- MODAL HEADER -->
+      <div id="modal-header-bg" class="bg-emerald-950 text-white p-6 relative">
+        <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/40 hover:bg-black/70 text-white w-9 h-9 rounded-full flex items-center justify-center font-bold text-base transition">
+          &times;
+        </button>
+        <div class="flex items-center gap-2 mb-2">
+          <span id="modal-num-badge" class="bg-amber-400 text-stone-950 font-extrabold text-[10px] uppercase px-2.5 py-0.5 rounded">Ruta #0</span>
+          <span id="modal-alt-badge" class="bg-emerald-800 text-emerald-200 border border-emerald-600 text-[10px] font-semibold px-2.5 py-0.5 rounded">0,000 msnm</span>
+        </div>
+        <h2 id="modal-title" class="text-2xl md:text-3xl font-extrabold leading-tight">Nombre del Destino</h2>
+        <p id="modal-location" class="text-emerald-200 text-xs md:text-sm mt-1">Ubicación Provincial / Distrital</p>
+      </div>
+
+      <!-- MODAL BODY -->
+      <div class="p-6 overflow-y-auto space-y-6 flex-grow text-xs md:text-sm text-stone-700">
+        
+        <!-- QUICK SPECS -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-stone-50 p-3.5 rounded-xl border border-stone-200">
+          <div>
+            <span class="text-[10px] text-stone-500 block uppercase font-bold">Salida Matutina</span>
+            <span id="modal-departure" class="font-extrabold text-amber-600 text-sm">00:00 AM (Máx 8:00)</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-stone-500 block uppercase font-bold">Dificultad</span>
+            <span id="modal-difficulty" class="font-bold text-stone-800 text-sm">Moderada</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-stone-500 block uppercase font-bold">Duración</span>
+            <span id="modal-duration" class="font-bold text-stone-800 text-sm">00 hrs</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-stone-500 block uppercase font-bold">Modalidades</span>
+            <span id="modal-modalities" class="font-bold text-stone-800 text-sm">Full Day / Camp</span>
+          </div>
+        </div>
+
+        <!-- PHOTOGRAPHIC GALLERY INSIDE MODAL -->
+        <div>
+          <h4 class="font-bold text-stone-900 text-xs uppercase tracking-wider mb-2 text-emerald-800 flex items-center gap-1.5">
+            <span>&#128247; Fotografías de Referencia del Lugar</span>
+          </h4>
+          <div id="modal-photos-container" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <!-- Modal photos injected dynamically by JS -->
+          </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div>
+          <h4 class="font-bold text-stone-900 text-xs uppercase tracking-wider mb-1 text-emerald-800">Descripción General y Atractivos</h4>
+          <p id="modal-description" class="leading-relaxed text-stone-600">Descripción detallada del lugar...</p>
+        </div>
+
+        <!-- ITINERARY TABS -->
+        <div>
+          <div class="flex border-b border-stone-200 mb-4">
+            <button id="tab-fullday-btn" onclick="switchItineraryTab('fullday')" class="py-2 px-4 border-b-2 border-emerald-700 font-bold text-emerald-800 text-xs">
+              Itinerario Full Day (Salida &le; 8:00 AM)
+            </button>
+            <button id="tab-camp-btn" onclick="switchItineraryTab('camp')" class="py-2 px-4 border-b-2 border-transparent text-stone-500 font-bold hover:text-stone-800 text-xs">
+              Opción Campamento (2D / 1N)
+            </button>
+          </div>
+
+          <!-- FULL DAY TAB CONTENT -->
+          <div id="tab-fullday-content" class="space-y-2">
+            <div id="modal-itinerary-fullday" class="space-y-2 pl-2 border-l-2 border-emerald-600">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <!-- CAMPING TAB CONTENT -->
+          <div id="tab-camp-content" class="hidden space-y-2">
+            <div id="modal-itinerary-camp" class="space-y-2 pl-2 border-l-2 border-amber-500">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- EQUIPMENT & RECOMMENDATIONS -->
+        <div class="bg-amber-50/60 p-4 rounded-xl border border-amber-200 text-xs space-y-2">
+          <h4 class="font-bold text-amber-900 text-xs uppercase tracking-wider">&#127957; Equipamiento y Recomendaciones</h4>
+          <p id="modal-equipment" class="text-stone-700 leading-relaxed">Recomendaciones de ropa, calzado e hidratación...</p>
+        </div>
+
+      </div>
+
+      <!-- MODAL FOOTER -->
+      <div class="bg-stone-100 p-4 border-t border-stone-200 flex justify-between items-center text-xs">
+        <span class="text-stone-500">Salidas coordinadas en bus "ruta" local</span>
+        <button onclick="closeModal()" class="bg-stone-800 hover:bg-stone-900 text-white font-bold px-5 py-2 rounded-lg transition">
+          Cerrar Detalle
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-stone-900 text-stone-400 text-xs py-8 border-t border-stone-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+      <p class="text-stone-300 font-bold">&copy; 2026 Guía Informativa del Viaje de Confraternidad Ayacucho</p>
+      <p class="text-stone-500 max-w-2xl mx-auto leading-relaxed">
+        Portal informativo elaborado para facilitar la consulta de itinerarios, fotografías de referencia y especificaciones técnicas de las 10 rutas seleccionadas para transporte en buses locales tipo "rutas" contratados en la ciudad de Ayacucho.
+      </p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // --- BASE DATA FOR ALL 10 PROPOSALS (Excluding Wari, No Pricing, Morning Departures <= 8:00 AM) ---
+    const proposalsData = [
+      {
+        id: 1,
+        title: "Volcán Dormido y Pozas Termales de Pachapupum",
+        province: "Huanca Sancos / Sacsamarca",
+        altitude: 4100,
+        difficulty: "Moderada",
+        departureTime: "04:00 AM",
+        duration: "16 h / 2D-1N",
+        modalities: ["Full Day", "Campamento"],
+        hasCamping: true,
+        description: "Monumento geotérmico natural único con un cono de piedra calcárea de 40 metros de altura, un cráter de agua sulfurosa hirviendo y pozas termales medicinales relajantes en sus faldas.",
+        itineraryFullDay: [
+          "04:00 AM - Salida puntual de Ayacucho en bus 'ruta' hacia Huanca Sancos.",
+          "08:00 AM - Parada técnica para desayuno tradicional en Huanca Sancos.",
+          "10:30 AM - Arribo a Pachapupum (4,100 msnm). Ascenso al cono calcáreo y baño en pozas termales.",
+          "01:30 PM - Almuerzo típico de la zona y descanso al aire libre.",
+          "04:30 PM - Parada fotográfica en el Cañón de Caracha.",
+          "08:00 PM - Arribo de retorno a la ciudad de Ayacucho."
+        ],
+        itineraryCamp: [
+          "Día 1 (07:00 AM) - Partida matutina desde Ayacucho hacia Sacsamarca.",
+          "Día 1 (02:00 PM) - Armado de campamento próximo a las pozas termales.",
+          "Día 1 (07:00 PM) - Noche de integración astronómica y baño nocturno en aguas sulfurosas.",
+          "Día 2 (08:00 AM) - Recorrido por la quebrada geotérmica y retorno a Ayacucho a las 06:00 PM."
+        ],
+        equipment: "Casaca térmica impermeable, chullo, guantes, traje de baño, toalla, zapatillas de trekking y carpa de montaña para la opción campamento.",
+        images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3roerVejC6YCNvE84ZeRLJspgoUr9mvEirg972TQ228_Vq5qv6LGHsrE&s=10",
+          "https://huancaraylla.com.pe/wp-content/uploads/2022/05/volcan-pachapupum-1.png",
+          "https://huancaraylla.com.pe/wp-content/uploads/2022/05/pachapupum3.jpg"
+        ]
+      },
+      {
+        id: 2,
+        title: "Anillo de Lagunas Glaciares de Razuhuillca",
+        province: "Huanta / Cordillera Razuhuillca",
+        altitude: 4095,
+        difficulty: "Alta",
+        departureTime: "05:00 AM",
+        duration: "8 h / 2D-1N",
+        modalities: ["Full Day", "Campamento"],
+        hasCamping: true,
+        description: "Impresionante circuito altoandino que reúne 9 lagunas de origen glaciar (Chacaccocha, Yanaccocha, San Antonio) alimentadas por los deshielos del macizo de Razuhuillca.",
+        itineraryFullDay: [
+          "05:00 AM - Partida de Ayacucho hacia la provincia de Huanta.",
+          "06:30 AM - Desayuno en Huanta (Chorizo huantino / chicha de 7 semillas).",
+          "08:00 AM - Ascenso vehicular e inicio del trekking guiado por el anillo de lagunas.",
+          "01:00 PM - Box lunch a orillas de la Laguna San Antonio (4,095 msnm).",
+          "04:00 PM - Descenso hacia la Plaza de Huanta.",
+          "06:00 PM - Arribo a Ayacucho."
+        ],
+        itineraryCamp: [
+          "Día 1 (07:30 AM) - Partida de Ayacucho hacia la Laguna Pampaccocha.",
+          "Día 1 (02:00 PM) - Armado de campamento de alta montaña y ritual de Pago al Apu Razuhuillca.",
+          "Día 2 (07:00 AM) - Trekking por las lagunas superiores y retorno a Huamanga a las 05:00 PM."
+        ],
+        equipment: "Zapatillas de montaña con agarre, bastones de trekking, cortaviento impermeable, lentes UV, bloqueador y agua mineral.",
+        images: [
+          "https://deaventura.pe/app/public_root/imgs/destinos/thumb_1530221643destino-laguna-razuhuillca.jpg",
+          "https://www.chullostravelperu.com/wp-content/uploads/2024/02/Excursion-lagunas-de-Razuhuillca_Belleza-Natural_Trekking.jpg",
+          "https://denomades.imgix.net/destinos/ayacucho/757/lagunas-ayacucho.jpg",
+          "https://denomades.imgix.net/destinos/ayacucho/757/lagunas-razuhuillca.jpg?w=1200&h=800&fit=crop&crop=faces,entropy&auto=format,compress&q=80"
+        ]
+      },
+      {
+        id: 3,
+        title: "Cataratas de Cangallo y Poza Gasificada de Huahuapuquio",
+        province: "Cangallo / Cangallo",
+        altitude: 3154,
+        difficulty: "Moderada",
+        departureTime: "07:00 AM",
+        duration: "11 h / 2D-1N",
+        modalities: ["Full Day", "Campamento"],
+        hasCamping: true,
+        description: "Circuito hídrico por Cangallo con visita a las cataratas de Pumapaccha, Batán y Qorimaqma, y la piscina natural gasificada de Huahuapuquio.",
+        itineraryFullDay: [
+          "07:00 AM - Partida de Ayacucho rumbo a Cangallo.",
+          "09:00 AM - Trekking por el circuito de cataratas (Pumapaccha, Batán, Qorimaqma).",
+          "01:00 PM - Baño recreativo en el manantial gasificado de Huahuapuquio.",
+          "02:00 PM - Almuerzo típico en la ciudad de Cangallo.",
+          "04:30 PM - Recorrido por la plaza de Cangallo y retorno a Ayacucho (07:30 PM)."
+        ],
+        itineraryCamp: [
+          "Día 1 (08:00 AM) - Salida hacia la zona campestre de Huahuapuquio.",
+          "Día 1 (05:00 PM) - Campamento a orillas del río Pampas con fogata.",
+          "Día 2 (08:30 AM) - Recorrido por las cataratas y retorno a Ayacucho a las 05:00 PM."
+        ],
+        equipment: "Muda de ropa adicional, sandalias, traje de baño, toalla, repelente y bloqueador solar.",
+        images: [
+          "https://www.huancarayllatravel.com/slider6/cataratas-cangallo2.jpg",
+          "https://www.huancarayllatravel.com/slider6/cataratas-cangallo1.jpg",
+          "https://denomades.imgix.net/destinos/ayacucho/747/cascadas-cangallo.jpg?w=900&h=800&fit=crop&crop=faces,entropy&auto=format,compress&q=80",
+          "https://denomades.imgix.net/destinos/ayacucho/747/catarata-pumapaqcha.jpg?w=900&h=800&fit=crop&crop=faces,entropy&auto=format,compress&q=80"
+        ]
+      },
+      {
+        id: 4,
+        title: "Bosque de Piedras de Huaraca y Laguna Ustunaqocha",
+        province: "Huamanga / Vinchos",
+        altitude: 3940,
+        difficulty: "Moderada",
+        departureTime: "07:30 AM",
+        duration: "8 h / 2D-1N",
+        modalities: ["Full Day", "Campamento"],
+        hasCamping: true,
+        description: "Asombrosa formación geológica en Vinchos con gigantescos monolitos pétreos labrados por el viento y la presencia de la apacible Laguna Ustunaqocha.",
+        itineraryFullDay: [
+          "07:30 AM - Salida en bus 'ruta' contratado hacia Vinchos.",
+          "09:30 AM - Exploración del laberinto de figuras de piedra en Huaraca.",
+          "12:00 PM - Paseo por la Laguna Ustunaqocha para avistamiento de aves.",
+          "01:30 PM - Almuerzo campestre.",
+          "03:30 PM - Retorno a la ciudad de Ayacucho (06:00 PM)."
+        ],
+        itineraryCamp: [
+          "Día 1 (08:00 AM) - Instalación de campamento junto a la Laguna Ustunaqocha.",
+          "Día 1 (08:00 PM) - Noche de observación estelar en el bosque de piedras.",
+          "Día 2 (09:00 AM) - Caminata fotográfica y retorno a Ayacucho por la tarde."
+        ],
+        equipment: "Casaca cortaviento, carpa resistente al viento, linterna frontal, calzado de trekking y abrigo.",
+        images: [
+          "https://denomades.imgix.net/destinos/ayacucho/828/bosque-piedras-huaraca.jpg?w=900&h=800&fit=crop&crop=faces,entropy&auto=format,compress&q=80",
+          "https://denomades.imgix.net/destinos/ayacucho/828/formaciones-rocosas.jpg?w=900&h=800&fit=crop&crop=faces,entropy&auto=format,compress&q=80"
+        ]
+      },
+      {
+        id: 5,
+        title: "Ciudad Inca de Vilcashuamán, Intihuatana y Titankayocc",
+        province: "Vilcas Huamán / Vischongo",
+        altitude: 3470,
+        difficulty: "Baja",
+        departureTime: "07:00 AM",
+        duration: "11 h / 2D-1N",
+        modalities: ["Full Day", "Campamento"],
+        hasCamping: true,
+        description: "Ruta histórico-arqueológica que combina el mayor Bosque de Puyas de Raimondi en Titankayocc, el recinto inca de Intihuatana y la pirámide del Usnu en Vilcashuamán.",
+        itineraryFullDay: [
+          "07:00 AM - Salida de Ayacucho.",
+          "09:00 AM - Parada en el Bosque de Puyas de Raimondi (Titankayocc).",
+          "11:00 AM - Guiado en el Complejo Arqueológico de Intihuatana (Pomacocha).",
+          "01:30 PM - Almuerzo en la ciudadela Inca de Vilcashuamán.",
+          "02:30 PM - Recorrido por el Usnu y el Templo del Sol y la Luna.",
+          "07:00 PM - Arribo de retorno a Ayacucho."
+        ],
+        itineraryCamp: [
+          "Día 1 (07:30 AM) - Partida con destino a Pomacocha.",
+          "Día 1 (04:00 PM) - Pernocte en zona de campamento junto a la laguna de Intihuatana.",
+          "Día 2 (09:00 AM) - Visita a Vilcashuamán y retorno al atardecer."
+        ],
+        equipment: "Cámara fotográfica, sombrero de ala ancha, ropa ligera para caminar y abrigo para la tarde.",
+        images: [
+          "https://denomades.imgix.net/destinos/ayacucho/749/vilcashuaman.jpg?w=1600&h=1200&fit=max&q=90&auto=format",
+          "https://denomades.imgix.net/destinos/ayacucho/749/ushno-piramide-ceremonial.jpg?w=1600&h=1200&fit=max&q=90&auto=format",
+          "https://huancaraylla.com.pe/wp-content/uploads/2022/05/9837775.jpg"
+        ]
+      },
+      {
+        id: 6,
+        title: "Laguna y Represa de Cuchoquesera",
+        province: "Huamanga / Vinchos",
+        altitude: 3750,
+        difficulty: "Baja",
+        departureTime: "08:00 AM",
+        duration: "7 h / 2D-1N",
+        modalities: ["Full Day", "Campamento"],
+        hasCamping: true,
+        description: "Enorme espejo de agua altoandino rodeado de suaves colinas y praderas. Opción ideal para ecoturismo, paseos recreativos en bote, fotos y acampe relajado.",
+        itineraryFullDay: [
+          "08:00 AM - Salida en bus 'ruta' por la vía a Vinchos.",
+          "09:30 AM - LLegada a Cuchoquesera.",
+          "10:00 AM - Caminata bordeando la represa y paseo opcional en bote.",
+          "01:00 PM - Almuerzo campestre (trucha frita / choclo con queso).",
+          "02:30 PM - Dinámicas de grupo y fotografías en los miradores.",
+          "05:30 PM - Arribo de retorno a Ayacucho."
+        ],
+        itineraryCamp: [
+          "Día 1 (08:00 AM) - Partida de Ayacucho e instalación de campamento en las praderas junto a la represa.",
+          "Día 1 (07:00 PM) - Fogata de confraternidad y noche estrellada.",
+          "Día 2 (09:00 AM) - Paseo en bote y caminata ecológica. Retorno a las 04:00 PM."
+        ],
+        equipment: "Zapatillas cómodas, abrigo cortaviento, manta para picnic, bloqueador y carpa con piso impermeable.",
+        images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFU8WeGuddIowBreLfJhNr1lR2aeViYz0zx0jtkaYrwyHuJQylZ0qSB1cZ&s=10",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgNa_8h7Ma3DuhHmKJ8XoieCFj-rhJUcebsbmv0WP5XG3k43WS9xxrEwwv&s=10"
+        ]
+      },
+      {
+        id: 7,
+        title: "Laguna Esmeralda - Verdeccocha",
+        province: "Huanta / Uchuraccay",
+        altitude: 4195,
+        difficulty: "Moderada",
+        departureTime: "06:00 AM",
+        duration: "9 h / 2D-1N",
+        modalities: ["Full Day", "Campamento"],
+        hasCamping: true,
+        description: "Gema turística de aguas verde esmeralda cristalinas que reflejan los picos de la Cordillera Razuhuillca. Excelente para ecoturismo y fotografía de montaña.",
+        itineraryFullDay: [
+          "06:00 AM - Partida desde Ayacucho hacia Huanta.",
+          "07:20 AM - Desayuno tradicional en la ciudad de Huanta.",
+          "08:00 AM - Traslado en bus hacia Culluchaca y Uchuraccay.",
+          "10:30 AM - Caminata de 20 min hacia la Laguna Esmeralda.",
+          "11:00 AM - Tiempo libre para fotografías y recorrido por el perímetro.",
+          "01:30 PM - Box lunch a orillas de la laguna.",
+          "06:00 PM - Arribo de retorno a Ayacucho."
+        ],
+        itineraryCamp: [
+          "Día 1 (07:30 AM) - Salida hacia Uchuraccay y armado de campamento cerca a la laguna.",
+          "Día 1 (06:00 PM) - Atardecer de alta montaña y velada grupal.",
+          "Día 2 (08:30 AM) - Trekking por los miradores circundantes y retorno a las 05:00 PM."
+        ],
+        equipment: "Ropa térmica, casaca de plumas/cortaviento, gafas de sol con protección UV, gorro térmico y guantes.",
+        images: [
+          "https://huancaraylla.com.pe/wp-content/uploads/2022/05/laguna-esmeralda-uchuraqay-scaled.jpg",
+          "https://huancaraylla.com.pe/wp-content/uploads/2022/05/laguna-verdeccocha.jpg",
+          "https://huancaraylla.com.pe/wp-content/uploads/2022/05/verdecocha-ayacucho.jpg"
+        ]
+      },
+      {
+        id: 8,
+        title: "Piscinas Termales de Collpa",
+        province: "Huamanga / San Pedro de Cachi",
+        altitude: 3200,
+        difficulty: "Baja",
+        departureTime: "08:00 AM",
+        duration: "6 h / Half Day",
+        modalities: ["Full Day"],
+        hasCamping: false,
+        description: "Pozas termales medicinales en una quebrada de clima templado. Opción perfecta de relajamiento y descanso sin necesidad de largas caminatas.",
+        itineraryFullDay: [
+          "08:00 AM - Salida en bus 'ruta' desde la ciudad de Ayacucho.",
+          "09:20 AM - Arribo al complejo de piscinas termales de Collpa.",
+          "10:00 AM - Mañana entera de baño en pozas termales minero-medicinales.",
+          "01:00 PM - Almuerzo grupal (pachamanca o trucha frita).",
+          "02:30 PM - Dinámicas grupales al aire libre en la quebrada.",
+          "05:00 PM - Arribo de retorno a Ayacucho."
+        ],
+        itineraryCamp: [
+          "Esta propuesta está configurada exclusivamente en modalidad Full Day por su carácter puramente termal y recreativo."
+        ],
+        equipment: "Traje de baño, sandalias, toalla, ropa de cambio seca, útiles de aseo personal y abrigo ligero.",
+        images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqPX9CcJmk7bJFwnYhuG94OWd2ZNxr3uS8rFDHGulNN6tRDmA33gc36P-V&s=10",
+          "https://scontent.flim14-1.fna.fbcdn.net/v/t39.30808-6/495952584_1119263123563474_7580325913404286169_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1190&ctp=s2048x1190&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=WxWXG_0vJ_MQ7kNvwHoB4hQ&_nc_oc=Adr4gDSm3TKNWNYaGtHMCpvlQAs3ddYRJo7PMUfvsMb36svX2MFOaKYMKkz-c9vmRyY&_nc_zt=23&_nc_ht=scontent.flim14-1.fna&_nc_gid=WHRi0qxFZoWlGZdUa5KuGg&_nc_ss=7b2a8&oh=00_AQM2ChvU0W1VfZRHXw_TJk-n8HqC-UUMtGPXBp_KIl-UAA&oe=6ACF0FAD",
+          "https://scontent.flim14-1.fna.fbcdn.net/v/t39.30808-6/495836245_1119263166896803_5938714030190121524_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1190&ctp=s2048x1190&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=ZhALjxXAxgwQ7kNvwE5gaCw&_nc_oc=AdpUOPxmf9LL4pDI7qB5L2XLX1wSM_9wIAwxSyHDi2IOJK-BbBvrn9m1hD7L-gHlxis&_nc_zt=23&_nc_ht=scontent.flim14-1.fna&_nc_gid=K7BhPc8bR7MZk9DEbS4I9g&_nc_ss=7b2a8&oh=00_AQNsT1HaVvgX0dghv_CfdN6-974J2r_OaTfxrkhQNdH-ow&oe=6ACF2FDF"
+        ]
+      },
+      {
+        id: 9,
+        title: "Proyecto Ica: Paracas, Campamento en Playa Barlovento y Huacachina",
+        province: "Ica / Pisco - Paracas & Playa Barlovento",
+        altitude: 5,
+        difficulty: "Moderada",
+        departureTime: "Viernes (08:00 PM)",
+        duration: "2 Días / 1 Noche",
+        modalities: ["Full Day Paracas + Ica", "Campamento Playa Barlovento"],
+        hasCamping: true,
+        isIcaSpecial: true,
+        description: "Propuesta especial interregional. Combina viaje nocturno desde Ayacucho a las 08:00 PM hacia Puerto El Chaco / Paracas, tour marítimo por las Islas Ballestas, viñedos tradicionales de Ica, el Oasis de Huacachina y campamento marino en Playa Barlovento (único sector habilitado y permitido para acampar).",
+        itineraryFullDay: [
+          "Viernes 08:00 PM - Partida nocturna directa desde la ciudad de Ayacucho con destino a Puerto El Chaco (Paracas).",
+          "Sábado 05:00 AM - Arribo directo a Puerto El Chaco, tiempo para estiramiento y desayuno marino frente al mar.",
+          "Sábado 08:00 AM - Tour marítimo guiado en deslizador hacia las Islas Ballestas y avistamiento de fauna marina.",
+          "Sábado 12:00 PM - Almuerzo marino típico y traslado hacia la ruta de viñedos/piscos tradicionales de Ica.",
+          "Sábado 05:00 PM - Traslado al sector autorizado de Playa Barlovento para armado de campamento, atardecer y fogata de integración.",
+          "Domingo 06:00 AM - Despertar al amanecer marino en Playa Barlovento y traslado hacia el Oasis de Huacachina.",
+          "Domingo 09:00 AM - Visita al Oasis de Huacachina con circuito de deportes de aventura (dune buggies/tubulares y sandboard).",
+          "Domingo 01:00 PM - Almuerzo típico iqueño, compra de choco-tejas y dulces artesanales.",
+          "Domingo 04:00 PM - Partida de retorno directo hacia la ciudad de Ayacucho (arribo estimado 10:30 PM)."
+        ],
+        itineraryCamp: [
+          "Viernes (08:00 PM) - Salida nocturna en bus desde Ayacucho hacia Puerto El Chaco (Paracas).",
+          "Sábado - Arribo a Puerto El Chaco (05:00 AM) + Islas Ballestas + Viñedos de Ica + Armado de campamento marino en Playa Barlovento.",
+          "Domingo - Amanecer marino en Playa Barlovento + Oasis de Huacachina (tubulares/sandboard) + Retorno a Ayacucho a las 04:00 PM."
+        ],
+        equipment: "Carpa playera, bolsa de dormir (sleeping), ropa ligera de playa, casaca cortaviento pesada para la noche en la costa, traje de baño, toalla, lentes de sol con protección UV, bloqueador solar y zapatillas/calzado cómodo. ADVERTENCIA: Prohibido acampar fuera de Playa Barlovento.",
+        images: [
+          "https://mochileaperu.com/wp-content/uploads/2022/02/johkyparra_198576796_184171076956885_6540045935012049937_n.jpg",
+          "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Rr99KJoLTR9wqZ28VXoeKSjnfIecXQcFy0iIT2QWH_tFmdQGDKIIEG-Nj_mCRbjJW5WzYHHDfzFOCKp7LZSTmx28epK13npjzBu-YQDSZ1VTqncadOaQJXLoN7PuKsl7_WnEo=s680-w680-h510-rw",
+          "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QygUyl8B_wTF65RO6YbOboOfLfqQ0g3-08wVOYMZHRVJeY5fBmGISwxIZX-o6X1fVwysjXPdaF0ViBkint4kVN5hMo1xJ-O6_FvMlId0qc7fQuzGIvEj-a0rQkyFTOa3e_b6lQTjFnOiQ=s680-w680-h510-rw",
+          "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/33/fd/0d/9d/caption.jpg?w=1000&h=-1&s=1",
+          "https://mochileaperu.com/wp-content/uploads/2022/02/cholichamo.travel_240410367_904629510263708_8186130788932309234_n.jpg",
+          "https://360explora.com.pe/wp-content/uploads/2023/08/azul-glamping-en-el-desierto-de-ica-desde-ica-galeria-del-tour.jpg"
+        ]
+      }
+
+    ];
+
+    // // GALLERY CATEGORIES DATA
+    // const galleryItems = [
+    //   { category: 'termas', title: 'Pozas Termales de Pachapupum', location: 'Huanca Sancos', url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80' },
+    //   { category: 'termas', title: 'Piscinas Termales de Collpa', location: 'San Pedro de Cachi', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80' },
+    //   { category: 'lagunas', title: 'Lagunas Glaciares de Razuhuillca', location: 'Huanta', url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80' },
+    //   { category: 'lagunas', title: 'Laguna Esmeralda - Verdeccocha', location: 'Uchuraccay', url: 'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?auto=format&fit=crop&w=600&q=80' },
+    //   { category: 'lagunas', title: 'Represa y Laguna Cuchoquesera', location: 'Vinchos', url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80' },
+    //   { category: 'formaciones', title: 'Pozas Turquesas de Millpu', location: 'Fajardo', url: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80' },
+    //   { category: 'formaciones', title: 'Cataratas de Cangallo', location: 'Cangallo', url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80' },
+    //   { category: 'formaciones', title: 'Bosque de Piedras de Huaraca', location: 'Vinchos', url: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=600&q=80' },
+    //   { category: 'cultura', title: 'Vilcashuamán y Usnu Inca', location: 'Vilcas Huamán', url: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=600&q=80' },
+      
+    // ];
+
+    // --- APPLICATION STATE ---
+    let currentProposals = [...proposalsData];
+    let chartAltitudeRef = null;
+    let chartDifficultyRef = null;
+    let activeModalProposal = null;
+
+    // --- INITIALIZATION ---
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCards(currentProposals);
+      renderComparisonTable(currentProposals);
+      renderGallery('all');
+      initCharts();
+
+      // Filter event listeners
+      document.getElementById("search-input").addEventListener("input", applyFilters);
+      document.getElementById("modality-filter").addEventListener("change", applyFilters);
+      document.getElementById("difficulty-filter").addEventListener("change", applyFilters);
+      document.getElementById("sort-select").addEventListener("change", applyFilters);
+    });
+
+    // --- RENDER CARDS GRID ---
+    function renderCards(items) {
+      const grid = document.getElementById("proposals-grid");
+      const visibleCount = document.getElementById("visible-count");
+      grid.innerHTML = "";
+      visibleCount.innerText = items.length;
+
+      if (items.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-white p-8 rounded-2xl text-center border border-stone-200">
+            <p class="text-stone-500 font-medium text-xs">No se encontraron propuestas con los filtros seleccionados.</p>
+            <button onclick="resetFilters()" class="mt-3 text-xs text-emerald-700 font-bold underline">Restablecer filtros</button>
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach(item => {
+        const badgeColor = item.altitude >= 4000 ? "bg-red-600 text-white" : item.altitude >= 3500 ? "bg-amber-600 text-white" : "bg-emerald-700 text-white";
+
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-2xl shadow-sm hover:shadow-md border border-stone-200 overflow-hidden flex flex-col justify-between transition duration-200 group";
+        
+        card.innerHTML = `
+          <div>
+            <!-- CARD IMAGE COVER -->
+            <div class="relative h-48 overflow-hidden bg-stone-900">
+              <img src="${item.images[0]}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-90">
+              <div class="absolute top-3 left-3 bg-stone-900/80 backdrop-blur-md text-amber-400 font-extrabold text-[11px] px-2.5 py-1 rounded-md border border-white/10">
+                #${item.id < 10 ? '0' + item.id : item.id}
+              </div>
+              <div class="absolute top-3 right-3 ${badgeColor} font-bold text-[10px] px-2.5 py-1 rounded-md shadow-md">
+                ${item.altitude.toLocaleString()} msnm
+              </div>
+              <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-0.5 rounded font-medium flex items-center gap-1">
+                <span>&#9200; Salida: ${item.departureTime}</span>
+              </div>
+            </div>
+
+            <!-- CARD CONTENT -->
+            <div class="p-5 space-y-3">
+              <h3 class="font-extrabold text-stone-900 text-base group-hover:text-emerald-800 transition leading-snug">
+                ${item.title}
+              </h3>
+              
+              <p class="text-[11px] font-semibold text-stone-500 flex items-center gap-1">
+                <span>&#128205; ${item.province}</span>
+              </p>
+
+              <p class="text-xs text-stone-600 line-clamp-3 leading-relaxed">
+                ${item.description}
+              </p>
+
+              <div class="pt-1 flex flex-wrap gap-1.5">
+                ${item.modalities.map(m => `<span class="bg-stone-100 text-stone-700 text-[10px] px-2 py-0.5 rounded font-medium">${m}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD FOOTER -->
+          <div class="p-4 bg-stone-50 border-t border-stone-100 flex items-center justify-between gap-2">
+            <div>
+              <span class="text-[10px] text-stone-400 block font-semibold uppercase">Dificultad</span>
+              <span class="text-xs font-bold text-stone-800">${item.difficulty}</span>
+            </div>
+            
+            <button onclick="openModal(${item.id})" class="bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold px-3.5 py-2 rounded-lg transition shadow-sm flex items-center gap-1.5">
+              <span>&#128065; Ver Fotos e Itinerario</span>
+            </button>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    // --- RENDER COMPARISON TABLE ---
+    function renderComparisonTable(items) {
+      const tbody = document.getElementById("comparison-table-body");
+      tbody.innerHTML = "";
+
+      items.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-stone-50 transition border-b border-stone-100";
+        tr.innerHTML = `
+          <td class="p-3 font-extrabold text-stone-400">#${item.id}</td>
+          <td class="p-3 font-bold text-stone-900">${item.title}</td>
+          <td class="p-3 text-stone-500">${item.province}</td>
+          <td class="p-3 font-semibold text-stone-800">${item.altitude} msnm</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-stone-100 text-stone-700">${item.difficulty}</span></td>
+          <td class="p-3 font-bold text-amber-700">${item.departureTime}</td>
+          <td class="p-3 text-stone-600">${item.duration}</td>
+          <td class="p-3 text-center">
+            <button onclick="openModal(${item.id})" class="text-xs font-bold text-emerald-700 hover:underline">Ver Detalle</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // --- GALLERY SHOWCASE ---
+    function renderGallery(cat) {
+      const container = document.getElementById("gallery-grid");
+      container.innerHTML = "";
+
+      const filtered = cat === 'all' ? galleryItems : galleryItems.filter(i => i.category === cat);
+
+      filtered.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "relative rounded-xl overflow-hidden h-44 group bg-stone-800 border border-stone-700";
+        div.innerHTML = `
+          <img src="${item.url}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 opacity-80 group-hover:opacity-100">
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent p-3 flex flex-col justify-end">
+            <h5 class="font-bold text-xs text-white leading-tight">${item.title}</h5>
+            <span class="text-[10px] text-amber-300">&#128205; ${item.location}</span>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function filterGallery(cat) {
+      const btns = ['all', 'termas', 'lagunas', 'formaciones', 'cultura'];
+      btns.forEach(b => {
+        const btn = document.getElementById(`btn-gal-${b}`);
+        if (b === cat) {
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 text-stone-950 transition";
+        } else {
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-stone-800 text-stone-300 hover:bg-stone-700 transition";
+        }
+      });
+      renderGallery(cat);
+    }
+
+    // --- FILTER ENGINE ---
+    function applyFilters() {
+      const search = document.getElementById("search-input").value.toLowerCase();
+      const modality = document.getElementById("modality-filter").value;
+      const difficulty = document.getElementById("difficulty-filter").value;
+      const sort = document.getElementById("sort-select").value;
+
+      let filtered = proposalsData.filter(item => {
+        const matchesSearch = item.title.toLowerCase().includes(search) || item.province.toLowerCase().includes(search);
+        
+        let matchesModality = true;
+        if (modality === "fullday") matchesModality = item.modalities.includes("Full Day");
+        if (modality === "campamento") matchesModality = item.hasCamping;
+
+        let matchesDifficulty = true;
+        if (difficulty !== "all") matchesDifficulty = item.difficulty.toLowerCase().includes(difficulty.toLowerCase());
+
+        return matchesSearch && matchesModality && matchesDifficulty;
+      });
+
+      if (sort === "num-asc") filtered.sort((a,b) => a.id - b.id);
+      if (sort === "alt-desc") filtered.sort((a,b) => b.altitude - a.altitude);
+      if (sort === "alt-asc") filtered.sort((a,b) => a.altitude - b.altitude);
+
+      currentProposals = filtered;
+      renderCards(currentProposals);
+      renderComparisonTable(currentProposals);
+    }
+
+    function resetFilters() {
+      document.getElementById("search-input").value = "";
+      document.getElementById("modality-filter").value = "all";
+      document.getElementById("difficulty-filter").value = "all";
+      document.getElementById("sort-select").value = "num-asc";
+      applyFilters();
+    }
+
+    // --- MODAL HANDLING ---
+    function openModal(id) {
+      const proposal = proposalsData.find(p => p.id === id);
+      if (!proposal) return;
+      activeModalProposal = proposal;
+
+      document.getElementById("modal-num-badge").innerText = `Ruta #${proposal.id < 10 ? '0'+proposal.id : proposal.id}`;
+      document.getElementById("modal-alt-badge").innerText = `${proposal.altitude.toLocaleString()} msnm`;
+      document.getElementById("modal-title").innerText = proposal.title;
+      document.getElementById("modal-location").innerText = ` Provincia / Distrito: ${proposal.province}`;
+      
+      document.getElementById("modal-departure").innerText = proposal.departureTime;
+      document.getElementById("modal-difficulty").innerText = proposal.difficulty;
+      document.getElementById("modal-duration").innerText = proposal.duration;
+      document.getElementById("modal-modalities").innerText = proposal.modalities.join(" / ");
+      document.getElementById("modal-description").innerText = proposal.description;
+      document.getElementById("modal-equipment").innerText = proposal.equipment;
+
+      // Render Modal Photos
+      const photoContainer = document.getElementById("modal-photos-container");
+      photoContainer.innerHTML = proposal.images.map((imgUrl, i) => `
+        <div class="h-32 rounded-lg overflow-hidden border border-stone-200 bg-stone-100">
+          <img src="${imgUrl}" alt="Foto ${i+1}" class="w-full h-full object-cover">
+        </div>
+      `).join('');
+
+      // Full Day itinerary list
+      const fulldayContainer = document.getElementById("modal-itinerary-fullday");
+      fulldayContainer.innerHTML = proposal.itineraryFullDay.map(step => `
+        <div class="bg-stone-50 p-2.5 rounded-lg border border-stone-200">
+          <p class="text-xs text-stone-800 font-medium">${step}</p>
+        </div>
+      `).join('');
+
+      // Camping itinerary list
+      const campContainer = document.getElementById("modal-itinerary-camp");
+      campContainer.innerHTML = proposal.itineraryCamp.map(step => `
+        <div class="bg-amber-50/50 p-2.5 rounded-lg border border-amber-200">
+          <p class="text-xs text-amber-950 font-medium">${step}</p>
+        </div>
+      `).join('');
+
+      switchItineraryTab('fullday');
+      document.getElementById("detail-modal").classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("detail-modal").classList.add("hidden");
+      activeModalProposal = null;
+    }
+
+    function switchItineraryTab(tab) {
+      const fulldayBtn = document.getElementById("tab-fullday-btn");
+      const campBtn = document.getElementById("tab-camp-btn");
+      const fulldayContent = document.getElementById("tab-fullday-content");
+      const campContent = document.getElementById("tab-camp-content");
+
+      if (tab === 'fullday') {
+        fulldayBtn.className = "py-2 px-4 border-b-2 border-emerald-700 font-bold text-emerald-800 text-xs";
+        campBtn.className = "py-2 px-4 border-b-2 border-transparent text-stone-500 font-bold hover:text-stone-800 text-xs";
+        fulldayContent.classList.remove("hidden");
+        campContent.classList.add("hidden");
+      } else {
+        campBtn.className = "py-2 px-4 border-b-2 border-amber-600 font-bold text-amber-800 text-xs";
+        fulldayBtn.className = "py-2 px-4 border-b-2 border-transparent text-stone-500 font-bold hover:text-stone-800 text-xs";
+        campContent.classList.remove("hidden");
+        fulldayContent.classList.add("hidden");
+      }
+    }
+
+    // --- CHART.JS VISUALIZATIONS ---
+    function initCharts() {
+      // 1. Altitude Chart
+      const ctxAlt = document.getElementById("chartAltitude").getContext("2d");
+      chartAltitudeRef = new Chart(ctxAlt, {
+        type: 'bar',
+        data: {
+          labels: proposalsData.map(p => '#' + p.id + ' ' + p.title.substring(0, 12) + '...'),
+          datasets: [{
+            label: 'Altitud (msnm)',
+            data: proposalsData.map(p => p.altitude),
+            backgroundColor: proposalsData.map(p => p.altitude >= 4000 ? 'rgba(220, 38, 38, 0.8)' : p.altitude >= 3500 ? 'rgba(217, 119, 6, 0.8)' : 'rgba(22, 163, 74, 0.8)'),
+            borderColor: '#15803d',
+            borderWidth: 1,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                title: function(context) {
+                  return proposalsData[context[0].dataIndex].title;
+                },
+                label: function(context) {
+                  return `Altitud: ${context.raw} msnm`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: { ticks: { font: { size: 9 }, maxRotation: 45 } },
+            y: { title: { display: true, text: 'Altitud (msnm)', font: { size: 10 } } }
+          }
+        }
+      });
+
+      // 2. Difficulty Breakdown Doughnut Chart
+      const ctxDifficulty = document.getElementById("chartDifficulty").getContext("2d");
+      const diffCounts = { "Baja": 0, "Moderada": 0, "Alta": 0 };
+      proposalsData.forEach(p => {
+        if (p.difficulty.includes("Alta")) diffCounts["Alta"]++;
+        else if (p.difficulty.includes("Moderada")) diffCounts["Moderada"]++;
+        else diffCounts["Baja"]++;
+      });
+
+      chartDifficultyRef = new Chart(ctxDifficulty, {
+        type: 'doughnut',
+        data: {
+          labels: ['Dificultad Baja (Recreativa)', 'Dificultad Moderada (Caminata)', 'Dificultad Alta (Alta Montaña)'],
+          datasets: [{
+            data: [diffCounts["Baja"], diffCounts["Moderada"], diffCounts["Alta"]],
+            backgroundColor: ['#16a34a', '#f59e0b', '#dc2626'],
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 12 } }
+          }
+        }
+      });
+    }
+
+    // --- ACCORDION TOGGLE ---
+    function toggleFaq(id) {
+      const content = document.getElementById(id);
+      const icon = document.getElementById(id + "-icon");
+      if (content.classList.contains("hidden")) {
+        content.classList.remove("hidden");
+        icon.innerText = "−";
+      } else {
+        content.classList.add("hidden");
+        icon.innerText = "+";
+      }
+    }
+  </script>
+</body>
+</html>
